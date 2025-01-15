@@ -11,21 +11,16 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten, Input
 from tensorflow.keras.models import Model
+import pickle 
 
 
-# model building
-conv_base = tf.keras.applications.VGG16(weights='imagenet', include_top=False, input_shape=(600, 600, 3))
-input_image = Input(shape=( 600,600, 3))  # Input for the right branch
-conv  = conv_base(input_image)  # Apply the same conv_base to the right branch
-flaten = Flatten()(conv)
-FC_layer = Dense(1024, activation='relu')(flaten)
-Featur_vector = Dense(512, activation='sigmoid')(FC_layer)
-final_model = Model(inputs= input_image , outputs= Featur_vector)
-final_model.compile(optimizer='adam', loss='categorical_crossentropy')
+# model loading
+final_model = pickle.load(open('/mnt/c/Users/YASH/OneDrive/Desktop/CBIR_System/CBIR_System/Model.pkl','rb'))
 
 
 def generate_embedding(image_path):
     img = Image.open(image_path)  # Open the image
+    img = img.convert('RGB')
     img = img.resize((600, 600))  # Resize the image
     img_array = np.array(img)
     embedding = final_model.predict(img_array.reshape(1,600,600,3))
@@ -46,7 +41,7 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
     if index_name not in pc.list_indexes().names():
         pc.create_index(
             name=index_name,
-            dimension=512,  # Replace with your model dimensions
+            dimension=1024,  # Replace with your model dimensions
             metric="cosine",  # Replace with your model metric
             spec=ServerlessSpec(
                 cloud="aws",
@@ -80,6 +75,7 @@ def Search_In_DB(Image_path):
     index = pc.Index(index_name)
     
     img = Image.open(Image_path)  # Open the image
+    img = img.convert('RGB')
     img = img.resize((600, 600))  # Resize the image
     img_array = np.array(img)  # Convert to NumPy array
     
@@ -95,6 +91,6 @@ def Search_In_DB(Image_path):
     
     matching_ids = [
     {'id': match['id'], 'score': match['score']} 
-    for match in results['matches'] if match['score'] > 0.50
+    for match in results['matches'] if match['score'] > 0.60
     ]
     return matching_ids

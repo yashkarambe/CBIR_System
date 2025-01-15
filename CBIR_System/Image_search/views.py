@@ -63,10 +63,11 @@ def Search_image(request):
     people_with_scores = [
     {
         'person': person,
-        'score': matching_scores.get(person.embedding_id, 0)  # Default score to 0 if not found
+        'score': matching_scores.get(person.embedding_id, 0) * 100  # Default score to 0 if not found
     }
     for person in matching_people
     ]
     context = {'people_with_scores': people_with_scores}
     print(context)
+    
     return render(request, 'Search.html', context)

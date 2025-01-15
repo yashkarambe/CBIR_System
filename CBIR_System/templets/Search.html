@@ -10,7 +10,7 @@
             <div class="input-group mb-3">
               <form method="post" class="row g-3 needs-validation" action="/Search_image/" enctype="multipart/form-data" validate>
                 {% csrf_token %}
-                <input type="file" class="form-control" id="input_image" name="input_image" >
+                <input type="file" class="form-control" id="input_image" name="input_image" required>
                 <button type="submit" class="btn btn-outline-secondary">Search</button>
               </form>
             </div>
@@ -31,12 +31,14 @@
                                 <strong>City:</strong> {{ data.person.city }}<br>
                                 <strong>Gender:</strong> {{ data.person.gender }}<br>
                                 <strong>Zip Code:</strong> {{ data.person.zip }}<br>
-                                <strong>Score:</strong> {{ data.score }}
+                                <strong>Score:</strong> {{ data.score }}<span>%</span>
                             </p>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+                {% empty %}
+                <p class="text-center">No matches found with a score greater than 0.60.</p>
+                {% endfor %}
         </div>
     </div>
     
