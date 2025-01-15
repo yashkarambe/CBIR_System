@@ -30,7 +30,6 @@ def generate_embedding(image_path):
     img_array = np.array(img)
     embedding = final_model.predict(img_array.reshape(1,600,600,3))
     return embedding
-    raise ValueError("Invalid file object provided for embedding generation.")
 
 
 
