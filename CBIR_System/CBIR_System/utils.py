@@ -37,7 +37,7 @@ def generate_embedding(image_path):
 def save_person_with_embedding(request , name, age,city, gender, zip_code, image):
     # Generate image embedding
     
-    messages.success(request, "Person added run hear")
+    # messages.success(request, "Check the Function!")
     embedding = generate_embedding(image)
     
     #Connecting with Vector Database 
@@ -68,6 +68,6 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
     ])
     
     # Save person info in Django model
-    person = Person(name=name, age=age, city = city, gender=gender, zip_code=zip_code, embedding_id=embedding_id , image = image)
+    person = Person(name=name, age=age, city = city, gender=gender, zip=zip_code, embedding_id=embedding_id , image = image)
     person.save()
     return person
