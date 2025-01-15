@@ -17,9 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Image_search import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
    path("" , views.index , name="ImageSearch"),  #If blank path then run index function
    path("index.html" , views.index , name="ImageSearch"), 
-   path("Search.html" , views.Search , name="ImageSearch") 
-]
+   path("Search.html" , views.Search , name="ImageSearch"),
+   path("add_data/" , views.add_person , name="add_data")
+   
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
