@@ -8,52 +8,38 @@
             <label for="validationCustom05" class="form-label">Search In Database</label>
             </h1> </b>
             <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02">
-                <button type="button" class="btn btn-outline-secondary">Search</button>
+              <form method="post" class="row g-3 needs-validation" action="/Search_image/" enctype="multipart/form-data" validate>
+                {% csrf_token %}
+                <input type="file" class="form-control" id="input_image" name="input_image" >
+                <button type="submit" class="btn btn-outline-secondary">Search</button>
+              </form>
             </div>
         </div>
     </center>
-        <div class="container center">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                  <div class="card h-100">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Information</h5>
-                        <p class="card-text">Name: </p>
-                        <p class="card-text">Age: </p>
-                        <p class="card-text">City: </p>
-                        <p class="card-text">Zip: </p>
+    
+    <div class="container center">
+        <div class="container mt-4">
+            <h2 class="text-center">Search Results</h2>
+            <div class="row">
+                {% for person in  people%}
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <img src="CBIR_System/media{{ person.image }}" class="card-img-top" alt="{{ person.name }}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ person.name }}</h5>
+                                <p class="card-text">
+                                    <strong>Age:</strong> {{ person.age }}<br>
+                                    <strong>City:</strong> {{ person.city }}<br>
+                                    <strong>Gender:</strong> {{ person.gender }}<br>
+                                    <strong>Zip Code:</strong> {{ person.zip }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a short card.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
-                  </div>
-                </div>
+                {% empty %}
+                    <p class="text-center">No matches found with a score greater than 0.65.</p>
+                {% endfor %}
             </div>
-        </div>    
+        </div>
+    </div>    
 {% endblock body %}

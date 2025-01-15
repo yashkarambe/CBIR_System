@@ -24,6 +24,7 @@ urlpatterns = [
    path("" , views.index , name="ImageSearch"),  #If blank path then run index function
    path("index.html" , views.index , name="ImageSearch"), 
    path("Search.html" , views.Search , name="ImageSearch"),
-   path("add_data/" , views.add_person , name="add_data")
+   path("add_data/" , views.add_person , name="add_data"),
+   path("Search_image/" , views.Search_image , name="Search_image")
    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

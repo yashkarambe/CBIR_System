@@ -71,3 +71,29 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
     person = Person(name=name, age=age, city = city, gender=gender, zip=zip_code, embedding_id=embedding_id , image = image)
     person.save()
     return person
+
+
+
+def Search_In_DB(Image_path):
+    #Connecting with Vector Database 
+    index_name = "image-similarity"  
+    pc = Pinecone(api_key='pcsk_4cAhnJ_JWTBdMu9iBKy1K1quPEj7kMqsG2qDCs7LXdYRMKELA3pDdjcD2akLVo5TNyprrM')
+    index = pc.Index(index_name)
+    
+    img = Image.open(Image_path)  # Open the image
+    img = img.resize((600, 600))  # Resize the image
+    img_array = np.array(img)  # Convert to NumPy array
+    
+    query_vector = final_model.predict(img_array.reshape(1,600,600,3)) #add a batch dimension
+    query_vector = np.array(query_vector, dtype=np.float32)
+    query_vector = query_vector.tolist()
+    
+    results = index.query(
+    vector=query_vector,
+    top_k=5,  # Number of results to retrieve
+    include_metadata=False
+    )
+    matching_ids = [
+        match['id'] for match in results['matches'] if match['score'] > 0.50
+    ]
+    return matching_ids
