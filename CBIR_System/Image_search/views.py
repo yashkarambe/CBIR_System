@@ -56,7 +56,17 @@ def add_person(request):
 
 def Search_image(request):
     image = request.FILES.get('input_image')
-    matching_ids = Search_In_DB(Image_path=image)
+    matching_data = Search_In_DB(Image_path=image)
+    matching_ids = [match['id'] for match in matching_data]
+    matching_scores = {match['id']: match['score'] for match in matching_data}
     matching_people = models.Person.objects.filter(embedding_id__in=matching_ids)
-    
-    return render(request, 'Search.html', {'people': matching_people})
+    people_with_scores = [
+    {
+        'person': person,
+        'score': matching_scores.get(person.embedding_id, 0)  # Default score to 0 if not found
+    }
+    for person in matching_people
+    ]
+    context = {'people_with_scores': people_with_scores}
+    print(context)
+    return render(request, 'Search.html', context)

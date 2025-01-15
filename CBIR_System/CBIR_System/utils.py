@@ -92,7 +92,9 @@ def Search_In_DB(Image_path):
     top_k=5,  # Number of results to retrieve
     include_metadata=False
     )
+    
     matching_ids = [
-        match['id'] for match in results['matches'] if match['score'] > 0.50
+    {'id': match['id'], 'score': match['score']} 
+    for match in results['matches'] if match['score'] > 0.50
     ]
     return matching_ids

@@ -18,28 +18,26 @@
     </center>
     
     <div class="container center">
-        <div class="container mt-4">
-            <h2 class="text-center">Search Results</h2>
-            <div class="row">
-                {% for person in  people%}
-                    <div class="col-md-4">
-                        <div class="card mb-3">
-                            <img src="{{ person.image.url }}" class="card-img-top" style="height: 400px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ person.name }}</h5>
-                                <p class="card-text">
-                                    <strong>Age:</strong> {{ person.age }}<br>
-                                    <strong>City:</strong> {{ person.city }}<br>
-                                    <strong>Gender:</strong> {{ person.gender }}<br>
-                                    <strong>Zip Code:</strong> {{ person.zip }}
-                                </p>
-                            </div>
+        <h2 class="text-center">Search Results</h2>
+        <div class="row">
+            {% for data in people_with_scores %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <img src="{{ data.person.image.url }}" class="card-img-top" alt="{{ data.person.name }}" style="height: 400px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ data.person.name }}</h5>
+                            <p class="card-text">
+                                <strong>Age:</strong> {{ data.person.age }}<br>
+                                <strong>City:</strong> {{ data.person.city }}<br>
+                                <strong>Gender:</strong> {{ data.person.gender }}<br>
+                                <strong>Zip Code:</strong> {{ data.person.zip }}<br>
+                                <strong>Score:</strong> {{ data.score }}
+                            </p>
                         </div>
                     </div>
-                {% empty %}
-                    <p class="text-center">No matches found with a score greater than 0.65.</p>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
-    </div>    
+    </div>
+    
 {% endblock body %}
