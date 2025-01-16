@@ -1,0 +1,6 @@
+tensorflow
+pinecone
+numpy
+PIL
+pickle
+matplotlib
