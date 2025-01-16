@@ -33,17 +33,18 @@ This project implements an **Image Similarity Search** system using Django as th
    cd CBIR_System
 
 2. **Install Dependencies**
+    ```bash
     pip install -r requirements.txt
 
 3. **Set Up Pinecone API**
 
-    Sign up at Pinecone.
-    Create an API key and update the project settings with your API key and environment.
+    - Sign up at Pinecone.
+    - Create an API key and update the project settings with your API key and environment.
 
 3. **Configure Django**
 
-    Update settings.py with your database and media settings.
-    Run the migrations:
+    - Update settings.py with your database and media settings.
+    - Run the migrations:
     
     ```bash
     python manage.py makemigrations
