@@ -35,7 +35,7 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
     
     #Connecting with Vector Database 
     index_name = "image-similarity"  
-    pc = Pinecone(api_key='pcsk_4cAhnJ_JWTBdMu9iBKy1K1quPEj7kMqsG2qDCs7LXdYRMKELA3pDdjcD2akLVo5TNyprrM')
+    pc = Pinecone(api_key= "<-- Use the API key for PineconDB -->")
     # Create index if it doesn't exist
     if index_name not in pc.list_indexes().names():
         pc.create_index(
@@ -70,7 +70,7 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
 def Search_In_DB(Image_path):
     #Connecting with Vector Database 
     index_name = "image-similarity"  
-    pc = Pinecone(api_key='pcsk_4cAhnJ_JWTBdMu9iBKy1K1quPEj7kMqsG2qDCs7LXdYRMKELA3pDdjcD2akLVo5TNyprrM')
+    pc = Pinecone(api_key="<-- Use the API key for PineconDB -->")
     index = pc.Index(index_name)
     
     img = Image.open(Image_path)  # Open the image
@@ -88,8 +88,10 @@ def Search_In_DB(Image_path):
     include_metadata=False
     )
     
+    Threshold = 0.60 #Threshold for the matched Images
+    
     matching_ids = [
     {'id': match['id'], 'score': match['score']} 
-    for match in results['matches'] if match['score'] > 0.60
+    for match in results['matches'] if match['score'] > Threshold
     ]
     return matching_ids
