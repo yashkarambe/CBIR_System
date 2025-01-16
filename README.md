@@ -66,4 +66,4 @@ This project implements an **Image Similarity Search** system using Django as th
 
 ## License
 
-This repository is licensed under a custom closed-source license. All rights reserved. For more information, see the [LICENSE](LICENSE) file.
+This repository is licensed under a custom closed-source license. All rights reserved. For more information, see the [LICENSE.txt](LICENSE) file.
