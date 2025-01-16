@@ -34,8 +34,8 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
     embedding = generate_embedding(image)
     
     #Connecting with Vector Database 
-    index_name = "image-similarity"  
     pc = Pinecone(api_key= "<-- Use the API key for PineconDB -->")
+    index_name = "image-similarity"  
     # Create index if it doesn't exist
     if index_name not in pc.list_indexes().names():
         pc.create_index(
@@ -69,8 +69,8 @@ def save_person_with_embedding(request , name, age,city, gender, zip_code, image
 
 def Search_In_DB(Image_path):
     #Connecting with Vector Database 
-    index_name = "image-similarity"  
     pc = Pinecone(api_key="<-- Use the API key for PineconDB -->")
+    index_name = "image-similarity"  
     index = pc.Index(index_name)
     
     img = Image.open(Image_path)  # Open the image
