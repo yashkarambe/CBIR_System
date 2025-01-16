@@ -34,7 +34,7 @@ This project implements an **Image Similarity Search** system using Django as th
 
 2. **Install Dependencies**
     ```bash
-    pip install -r requirements.txt
+    pip install -r requirement.txt
 
 3. **Set Up Pinecone API**
 
